@@ -61,13 +61,15 @@ begin
 				next_output := X"00000000"; 
 		end case;
 	
-		if(next_output = X"00000000") then zero <= '1'; else zero <= '0'; end if;
-		if(opcode = "0010" or opcode = "0100") then
+		if(opcode = "0010") then
 			ovfl <= ((oprA(31) and oprB(31) and (not(next_output(31)))) or (not(oprA(31)) and (not(oprB(31))) and next_output(31)) );
+		elsif (opcode = "0100") then
+			ovfl <= ((oprA(31) and (not(oprB(31))) and (not(next_output(31)))) or (not(oprA(31)) and oprB(31) and next_output(31)) );
 		else
 			ovfl <= '0';
 		end if;
 		
+		if(next_output = X"00000000") then zero <= '1'; else zero <= '0'; end if;
 		output <= next_output;
 		
 	end process;
