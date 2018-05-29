@@ -32,13 +32,13 @@ begin
 			when "0101" =>
 				next_output := std_logic_vector(unsigned(oprA) - unsigned(oprB));
 			when "0110" =>
-				if(signed(oprA) - signed(oprB) < 0) then
+				if(signed(oprA) < signed(oprB)) then
 					next_output := X"00000001";
 				else
 					next_output := X"00000000";
 				end if;
 			when "0111" =>
-				if(unsigned(oprA) - unsigned(oprB) < 0) then
+				if(unsigned(oprA) < unsigned(oprB)) then
 					next_output := X"00000001";
 				else
 					next_output := X"00000000";
