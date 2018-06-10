@@ -19,8 +19,9 @@ architecture behavioral of MIPS_REGS is
 	
 	begin
 	
-	main: process(clk) 
+	main: process(clk, radd1, radd2) 
 	begin
+	
 		if(rising_edge(clk)) then
 			if (wren = '1') then
 				if(to_integer(unsigned(wadd)) > 0) then
@@ -28,10 +29,9 @@ architecture behavioral of MIPS_REGS is
 				end if;
 			elsif (rst = '1') then
 				registers <= (others => X"00000000");
-			end if;	
-		elsif (falling_edge(clk)) then
-			r1 <= registers(to_integer(unsigned(radd1)));
-			r2 <= registers(to_integer(unsigned(radd2)));
+			end if;		
 		end if;
+		r1 <= registers(to_integer(unsigned(radd1)));
+		r2 <= registers(to_integer(unsigned(radd2)));
 	end process main;
 end behavioral;
