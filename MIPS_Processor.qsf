@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "Cyclone II"
 set_global_assignment -name DEVICE EP2C70F896C6
-set_global_assignment -name TOP_LEVEL_ENTITY MIPS_INST_MEM
+set_global_assignment -name TOP_LEVEL_ENTITY MIPS_DATA_RAM
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 13.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:00:25  MAY 18, 2018"
 set_global_assignment -name LAST_QUARTUS_VERSION 13.0
@@ -46,7 +46,7 @@ set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH MIPS_INST_MEM_TB -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH MIPS_DATA_MEM_TB -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_NAME MIPS_ALU_TB -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME DUT -section_id MIPS_ALU_TB
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "2 ns" -section_id MIPS_ALU_TB
@@ -57,17 +57,6 @@ set_global_assignment -name EDA_TEST_BENCH_NAME MIPS_REGS_TB -section_id eda_sim
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME DUT -section_id MIPS_REGS_TB
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "400 ps" -section_id MIPS_REGS_TB
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME MIPS_REGS_TB -section_id MIPS_REGS_TB
-set_global_assignment -name EDA_TEST_BENCH_NAME MIPS_INST_MEM_TB -section_id eda_simulation
-set_global_assignment -name EDA_DESIGN_INSTANCE_NAME DUT -section_id MIPS_INST_MEM_TB
-set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "200 ps" -section_id MIPS_INST_MEM_TB
-set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME MIPS_INST_MEM_TB -section_id MIPS_INST_MEM_TB
-set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_ALU_TB.vhdl -section_id MIPS_ALU_TB
-set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_REGS_TB.vhdl -section_id MIPS_REGS_TB
-set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_INST_MEM_TB.vhdl -section_id MIPS_INST_MEM_TB
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name VHDL_FILE MIPS_INST_ROM.vhd
 set_global_assignment -name VHDL_FILE MIPS_INST_RAM.vhd
 set_global_assignment -name VHDL_FILE MIPS_DATA_RAM.vhd
@@ -75,3 +64,24 @@ set_global_assignment -name VHDL_FILE MIPS_ALU.vhdl
 set_global_assignment -name VHDL_FILE MIPS_REGS.vhdl
 set_global_assignment -name MIF_FILE MIPS_INST_MEM.mif
 set_global_assignment -name MIF_FILE MIPS_DATA_MEM.mif
+set_global_assignment -name EDA_TEST_BENCH_NAME MIPS_INST_RAM_TB -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME DUT -section_id MIPS_INST_RAM_TB
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "20 ps" -section_id MIPS_INST_RAM_TB
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME MIPS_INST_RAM_TB -section_id MIPS_INST_RAM_TB
+set_global_assignment -name EDA_TEST_BENCH_NAME MIPS_INST_ROM_TB -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME DUT -section_id MIPS_INST_ROM_TB
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "20 ps" -section_id MIPS_INST_ROM_TB
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME MIPS_INST_ROM_TB -section_id MIPS_INST_ROM_TB
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_ALU_TB.vhdl -section_id MIPS_ALU_TB
+set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_REGS_TB.vhdl -section_id MIPS_REGS_TB
+set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_INST_RAM_TB.vhdl -section_id MIPS_INST_RAM_TB
+set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_INST_ROM_TB.vhdl -section_id MIPS_INST_ROM_TB
+set_global_assignment -name EDA_TEST_BENCH_NAME MIPS_DATA_MEM_TB -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME DUT -section_id MIPS_DATA_MEM_TB
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "14 ps" -section_id MIPS_DATA_MEM_TB
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME MIPS_DATA_MEM_TB -section_id MIPS_DATA_MEM_TB
+set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_DATA_MEM_TB.vhdl -section_id MIPS_DATA_MEM_TB
