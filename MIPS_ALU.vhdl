@@ -1,9 +1,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.MIPS_CONSTANTS.all;
 
 entity MIPS_ALU is
-	generic (WORD_SIZE : natural := 32);
 	port (
 			opcode :				 	in std_logic_vector(3 downto 0);
 			oprA, oprB :			in std_logic_vector(WORD_SIZE-1 downto 0);
@@ -19,52 +19,54 @@ begin
 	variable next_output: std_logic_vector(WORD_SIZE-1 downto 0);
 	begin
 		case opcode is
-			when "0000" =>
+			when ULA_AND =>
 				next_output := oprA and oprB;
-			when "0001" =>
+			when ULA_OR =>
 				next_output := oprA or oprB;
-			when "0010" =>
+			when ULA_ADD =>
 				next_output := std_logic_vector(signed(oprA) + signed(oprB));
-			when "0011" =>
+			when ULA_ADDU =>
 				next_output := std_logic_vector(unsigned(oprA) + unsigned(oprB));
-			when "0100" =>
+			when ULA_SUB =>
 				next_output := std_logic_vector(signed(oprA) - signed(oprB));
-			when "0101" =>
+			when ULA_SUBU =>
 				next_output := std_logic_vector(unsigned(oprA) - unsigned(oprB));
-			when "0110" =>
+			when ULA_SLT =>
 				if(signed(oprA) < signed(oprB)) then
 					next_output := X"00000001";
 				else
 					next_output := X"00000000";
 				end if;
-			when "0111" =>
+			when ULA_SLTU =>
 				if(unsigned(oprA) < unsigned(oprB)) then
 					next_output := X"00000001";
 				else
 					next_output := X"00000000";
 				end if;
-			when "1000" =>
+			when ULA_NOR =>
 				next_output := oprA nor oprB;
-			when "1001" =>
+			when ULA_XOR =>
 				next_output := oprA xor oprB;
-			when "1010" =>
+			when ULA_SLL =>
 				next_output := std_logic_vector(shift_left(unsigned(oprB), to_integer(unsigned(oprA))));
-			when "1011" =>
+			when ULA_SRL =>
 				next_output := std_logic_vector(shift_right(unsigned(oprB), to_integer(unsigned(oprA))));
-			when "1100" =>
+			when ULA_SRA =>
 				next_output := std_logic_vector(shift_right(signed(oprB), to_integer(unsigned(oprA))));
-			when "1101" =>
+			when ULA_RTR =>
 				next_output := std_logic_vector(rotate_right(signed(oprB), to_integer(unsigned(oprA))));
-			when "1110" =>
+			when ULA_RTL =>
 				next_output := std_logic_vector(rotate_left(signed(oprB), to_integer(unsigned(oprA))));
+			when ULA_LUI =>
+				next_output := oprB(15 downto 0) & X"0000";
 			when others =>
 				next_output := X"00000000"; 
 		end case;
 	
-		if(opcode = "0010") then
-			ovfl <= ((oprA(31) and oprB(31) and (not(next_output(31)))) or (not(oprA(31)) and (not(oprB(31))) and next_output(31)) );
-		elsif (opcode = "0100") then
-			ovfl <= ((oprA(31) and (not(oprB(31))) and (not(next_output(31)))) or (not(oprA(31)) and oprB(31) and next_output(31)) );
+		if(opcode = ULA_ADD) then
+			ovfl <= ((oprA(BIT_SIGN) and oprB(BIT_SIGN) and (not(next_output(BIT_SIGN)))) or (not(oprA(BIT_SIGN)) and (not(oprB(BIT_SIGN))) and next_output(BIT_SIGN)) );
+		elsif (opcode = ULA_SUB) then
+			ovfl <= ((oprA(BIT_SIGN) and (not(oprB(BIT_SIGN))) and (not(next_output(BIT_SIGN)))) or (not(oprA(BIT_SIGN)) and oprB(BIT_SIGN) and next_output(BIT_SIGN)) );
 		else
 			ovfl <= '0';
 		end if;

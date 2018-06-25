@@ -1,9 +1,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.MIPS_CONSTANTS.all;
 
-entity MIPS_REGS is 
-	generic (WORD_SIZE : natural := 32);  
+entity MIPS_REGS is   
 	port (   
 		clk, wren, rst  : 	in std_logic;  
 		radd1, radd2, wadd : in std_logic_vector(4 downto 0);   

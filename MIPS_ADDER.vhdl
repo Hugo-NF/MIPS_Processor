@@ -1,9 +1,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.MIPS_CONSTANTS.all;
 
 entity MIPS_ADDER is
-	generic (WORD_SIZE : natural := 32);
 	port (
 			oprA, oprB :			in std_logic_vector(WORD_SIZE-1 downto 0);
 			output :					out std_logic_vector(WORD_SIZE-1 downto 0)			
