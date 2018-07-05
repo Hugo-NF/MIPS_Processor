@@ -45,6 +45,7 @@ package MIPS_CONSTANTS is
 	constant OPCODE_ADDIU	: std_logic_vector(5 downto 0) := "001001";
 	constant OPCODE_ANDI		: std_logic_vector(5 downto 0) := "001100";
 	constant OPCODE_ORI		: std_logic_vector(5 downto 0) := "001101";
+	constant OPCODE_XORI		: std_logic_vector(5 downto 0) := "001110";
 	constant OPCODE_SLTI		: std_logic_vector(5 downto 0) := "001010";
 	constant OPCODE_BEQ		: std_logic_vector(5 downto 0) := "000100";
 	constant OPCODE_J			: std_logic_vector(5 downto 0) := "000010";

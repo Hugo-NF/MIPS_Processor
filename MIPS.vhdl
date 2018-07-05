@@ -9,14 +9,14 @@ entity MIPS is
 			new_pc:		in std_logic_vector(7 downto 0);
 			load_pc:	in std_logic;
 			debug:	in std_logic_vector(2 downto 0);
-			hex0:	out std_logic_vector(7 downto 0);
-			hex1:	out std_logic_vector(7 downto 0);
-			hex2:	out std_logic_vector(7 downto 0);
-			hex3:	out std_logic_vector(7 downto 0);
-			hex4:	out std_logic_vector(7 downto 0);
-			hex5:	out std_logic_vector(7 downto 0);
-			hex6:	out std_logic_vector(7 downto 0);
-			hex7:	out std_logic_vector(7 downto 0)
+			hex0:	out std_logic_vector(0 to 6);
+			hex1:	out std_logic_vector(0 to 6);
+			hex2:	out std_logic_vector(0 to 6);
+			hex3:	out std_logic_vector(0 to 6);
+			hex4:	out std_logic_vector(0 to 6);
+			hex5:	out std_logic_vector(0 to 6);
+			hex6:	out std_logic_vector(0 to 6);
+			hex7:	out std_logic_vector(0 to 6)
 	);
 end MIPS;
 
@@ -158,14 +158,14 @@ component MIPS_DEBUG is
 		signalG: 		in std_logic_vector(31 downto 0);
 		signalH: 		in std_logic_vector(31 downto 0);
 		sig_select:		in std_logic_vector(2 downto 0);
-		hex0:				out std_logic_vector(7 downto 0);
-		hex1:				out std_logic_vector(7 downto 0);
-		hex2:				out std_logic_vector(7 downto 0);
-		hex3:				out std_logic_vector(7 downto 0);
-		hex4:				out std_logic_vector(7 downto 0);
-		hex5:				out std_logic_vector(7 downto 0);
-		hex6:				out std_logic_vector(7 downto 0);
-		hex7:				out std_logic_vector(7 downto 0)
+		hex0:				out std_logic_vector(0 to 6);
+		hex1:				out std_logic_vector(0 to 6);
+		hex2:				out std_logic_vector(0 to 6);
+		hex3:				out std_logic_vector(0 to 6);
+		hex4:				out std_logic_vector(0 to 6);
+		hex5:				out std_logic_vector(0 to 6);
+		hex6:				out std_logic_vector(0 to 6);
+		hex7:				out std_logic_vector(0 to 6)
 	);
 end component;
 
@@ -225,7 +225,7 @@ begin
 										alu_srcA => ctl_alu_srcA, alu_srcB => ctl_alu_srcB, mem_write => ctl_mem_write, reg_write => ctl_reg_wren);
 	
 	PC_LOAD: MIPS_MUX_21 generic map(SIZE => 2)
-								port map(signalA => ctl_pc_control, signalB => "01", sel => load_pc, output => pc_src_select);
+								port map(signalA => ctl_pc_control, signalB => "01", sel => not(load_pc), output => pc_src_select);
 								
 	PC_SRC:	MIPS_MUX_41 generic map(SIZE => 32)
 								port map(signalA => pc_next, signalB => "0000000000000000000000" & new_pc & "00", signalC => X"00004380", signalD => epc_current, 
@@ -261,7 +261,7 @@ begin
 	SIGN_EXTEND: MIPS_SIGN_EXTEND port map(imm16 => instruction(15 downto 0), sig32 => sign_ext_imm);
 	
 	ALU_PORT_A: MIPS_MUX_21 generic map(SIZE => 32)
-									port map(signalA => reg_read1, signalB => X"0000"&instruction(15 downto 0), sel => ctl_alu_srcA, output => alu_src_A);
+									port map(signalA => reg_read1, signalB => X"000000"&"000"&instruction(15 downto 11), sel => ctl_alu_srcA, output => alu_src_A);
 				
 	ALU_PORT_B: MIPS_MUX_41 generic map(SIZE => 32)
 									port map(signalA => reg_read2, signalB => sign_ext_imm, signalC => X"0000"&instruction(15 downto 0), signalD => X"00000000",
@@ -276,8 +276,8 @@ begin
 							  port map(signalA => alu_output, signalB => data_output, signalC => pc_incremented, signalD => X"00000000", sel => ctl_mem_read_sel, output => write_data);
 							  
 	DEBUG_UNIT: MIPS_DEBUG port map(hex0 => hex0, hex1 => hex1, hex2 => hex2, hex3 => hex3, hex4 => hex4, hex5 => hex5, hex6 => hex6, hex7 => hex7,
-										signalA => pc_current, signalB => instruction, signalC => reg_read1, signalD => reg_read2, 
-										signalE => alu_output, signalF => write_data, signalG => epc_current, signalH => pc_next,
+										signalA => pc_current, signalB => pc_input, signalC => instruction, signalD => reg_read1, 
+										signalE => reg_read2, signalF => write_data, signalG => alu_output, signalH => epc_current,
 										sig_select => debug);
-
+										-- 0: PC, 1: Proximo PC, 2: Instrução lida, 3: Reg 1, 4: Reg 2, 5: Dado para escrita, 6: Saída da ULA, 7: EPC
 end behavioral;

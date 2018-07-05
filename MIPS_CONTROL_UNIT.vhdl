@@ -152,6 +152,11 @@ begin
 				cur_reg_write := ENABLE;
 				cur_alu_srcB := SEL_ZERO_IMM_ALU_B;
 			
+			when OPCODE_XORI =>
+				cur_alu_opcode := ULA_XOR;
+				cur_reg_write := ENABLE;
+				cur_alu_srcB := SEL_ZERO_IMM_ALU_B;
+			
 			when OPCODE_BEQ =>
 				cur_beq := ENABLE;
 				cur_alu_opcode := ULA_SUBU;

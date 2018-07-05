@@ -12,14 +12,14 @@ entity MIPS_DEBUG is
 		signalG: 		in std_logic_vector(31 downto 0);
 		signalH: 		in std_logic_vector(31 downto 0);
 		sig_select:		in std_logic_vector(2 downto 0);
-		hex0:				out std_logic_vector(7 downto 0);
-		hex1:				out std_logic_vector(7 downto 0);
-		hex2:				out std_logic_vector(7 downto 0);
-		hex3:				out std_logic_vector(7 downto 0);
-		hex4:				out std_logic_vector(7 downto 0);
-		hex5:				out std_logic_vector(7 downto 0);
-		hex6:				out std_logic_vector(7 downto 0);
-		hex7:				out std_logic_vector(7 downto 0)
+		hex0:				out std_logic_vector(0 to 6);
+		hex1:				out std_logic_vector(0 to 6);
+		hex2:				out std_logic_vector(0 to 6);
+		hex3:				out std_logic_vector(0 to 6);
+		hex4:				out std_logic_vector(0 to 6);
+		hex5:				out std_logic_vector(0 to 6);
+		hex6:				out std_logic_vector(0 to 6);
+		hex7:				out std_logic_vector(0 to 6)
 	);
 end MIPS_DEBUG;
 
@@ -38,7 +38,7 @@ end component;
 
 component convbinario7seg is
   port( numbinario : in STD_LOGIC_VECTOR(3 downto 0);
-        num7seg : out STD_LOGIC_VECTOR(7 downto 0) );
+        num7seg : out STD_LOGIC_VECTOR(0 to 6) );
 end component;
 
 signal mux1_out: std_logic_vector(31 downto 0);
