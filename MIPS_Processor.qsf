@@ -46,7 +46,7 @@ set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH MIPS_DATA_MEM_TB -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH MIPS_TB -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_NAME MIPS_ALU_TB -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME DUT -section_id MIPS_ALU_TB
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "2 ns" -section_id MIPS_ALU_TB
@@ -99,9 +99,9 @@ set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_RO
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
 set_location_assignment PIN_N2 -to clock_fpga
-set_location_assignment PIN_V2 -to debug[2]
-set_location_assignment PIN_V1 -to debug[1]
-set_location_assignment PIN_U4 -to debug[0]
+set_location_assignment PIN_U4 -to debug[2]
+set_location_assignment PIN_U3 -to debug[1]
+set_location_assignment PIN_T7 -to debug[0]
 set_location_assignment PIN_C13 -to new_pc[7]
 set_location_assignment PIN_AC13 -to new_pc[6]
 set_location_assignment PIN_AD13 -to new_pc[5]
@@ -168,6 +168,14 @@ set_location_assignment PIN_L6 -to hex7[3]
 set_location_assignment PIN_L7 -to hex7[4]
 set_location_assignment PIN_P9 -to hex7[5]
 set_location_assignment PIN_N9 -to hex7[6]
+set_global_assignment -name VHDL_FILE MIPS_MUX_321.vhdl
+set_location_assignment PIN_V2 -to debug[4]
+set_location_assignment PIN_V1 -to debug[3]
+set_global_assignment -name EDA_TEST_BENCH_NAME MIPS_TB -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME DUT -section_id MIPS_TB
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1 us" -section_id MIPS_TB
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME MIPS_TB -section_id MIPS_TB
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_ALU_TB.vhdl -section_id MIPS_ALU_TB
 set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_REGS_TB.vhdl -section_id MIPS_REGS_TB
 set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_INST_RAM_TB.vhdl -section_id MIPS_INST_RAM_TB
@@ -175,4 +183,4 @@ set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_INST_ROM_TB.vhdl -section_i
 set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_DATA_MEM_TB.vhdl -section_id MIPS_DATA_MEM_TB
 set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_MINOR_COMP_TB.vhdl -section_id MIPS_MINOR_COMPONENTS_TB
 set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_REGISTER_TB.vhdl -section_id MIPS_REGISTER_TB
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name EDA_TEST_BENCH_FILE MIPS_TB.vhdl -section_id MIPS_TB

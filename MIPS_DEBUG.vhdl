@@ -3,15 +3,39 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity MIPS_DEBUG is
 	port(
-		signalA: 		in std_logic_vector(31 downto 0);
-		signalB: 		in std_logic_vector(31 downto 0);
-		signalC: 		in std_logic_vector(31 downto 0);
-		signalD: 		in std_logic_vector(31 downto 0);
-		signalE: 		in std_logic_vector(31 downto 0);
-		signalF: 		in std_logic_vector(31 downto 0);
-		signalG: 		in std_logic_vector(31 downto 0);
-		signalH: 		in std_logic_vector(31 downto 0);
-		sig_select:		in std_logic_vector(2 downto 0);
+		signal0: 		in std_logic_vector(31 downto 0);
+		signal1: 		in std_logic_vector(31 downto 0);
+		signal2: 		in std_logic_vector(31 downto 0);
+		signal3: 		in std_logic_vector(31 downto 0);
+		signal4: 		in std_logic_vector(31 downto 0);
+		signal5: 		in std_logic_vector(31 downto 0);
+		signal6: 		in std_logic_vector(31 downto 0);
+		signal7: 		in std_logic_vector(31 downto 0);
+		signal8: 		in std_logic_vector(31 downto 0);
+		signal9: 		in std_logic_vector(31 downto 0);
+		signal10: 		in std_logic_vector(31 downto 0);
+		signal11: 		in std_logic_vector(31 downto 0);
+		signal12: 		in std_logic_vector(31 downto 0);
+		signal13: 		in std_logic_vector(31 downto 0);
+		signal14: 		in std_logic_vector(31 downto 0);
+		signal15: 		in std_logic_vector(31 downto 0);
+		signal16: 		in std_logic_vector(31 downto 0);
+		signal17: 		in std_logic_vector(31 downto 0);
+		signal18: 		in std_logic_vector(31 downto 0);
+		signal19: 		in std_logic_vector(31 downto 0);
+		signal20: 		in std_logic_vector(31 downto 0);
+		signal21: 		in std_logic_vector(31 downto 0);
+		signal22: 		in std_logic_vector(31 downto 0);
+		signal23: 		in std_logic_vector(31 downto 0);
+		signal24: 		in std_logic_vector(31 downto 0);
+		signal25: 		in std_logic_vector(31 downto 0);
+		signal26: 		in std_logic_vector(31 downto 0);
+		signal27: 		in std_logic_vector(31 downto 0);
+		signal28: 		in std_logic_vector(31 downto 0);
+		signal29: 		in std_logic_vector(31 downto 0);
+		signal30: 		in std_logic_vector(31 downto 0);
+		signal31: 		in std_logic_vector(31 downto 0);
+		sig_select:		in std_logic_vector(4 downto 0);
 		hex0:				out std_logic_vector(0 to 6);
 		hex1:				out std_logic_vector(0 to 6);
 		hex2:				out std_logic_vector(0 to 6);
@@ -24,14 +48,42 @@ entity MIPS_DEBUG is
 end MIPS_DEBUG;
 
 architecture behavioral of MIPS_DEBUG is
-component MIPS_MUX_41 is
+component MIPS_MUX_321 is
 	generic (SIZE : natural := 32);
 	port(
-		signalA	: in std_logic_vector(SIZE-1 downto 0);
-		signalB	: in std_logic_vector(SIZE-1 downto 0);
-		signalC	: in std_logic_vector(SIZE-1 downto 0);
-		signalD	: in std_logic_vector(SIZE-1 downto 0);
-		sel		: in std_logic_vector(1 downto 0);
+		signal0	: in std_logic_vector(SIZE-1 downto 0);
+		signal1	: in std_logic_vector(SIZE-1 downto 0);
+		signal2	: in std_logic_vector(SIZE-1 downto 0);
+		signal3	: in std_logic_vector(SIZE-1 downto 0);
+		signal4	: in std_logic_vector(SIZE-1 downto 0);
+		signal5	: in std_logic_vector(SIZE-1 downto 0);
+		signal6	: in std_logic_vector(SIZE-1 downto 0);
+		signal7	: in std_logic_vector(SIZE-1 downto 0);
+		signal8	: in std_logic_vector(SIZE-1 downto 0);
+		signal9	: in std_logic_vector(SIZE-1 downto 0);
+		signal10	: in std_logic_vector(SIZE-1 downto 0);
+		signal11	: in std_logic_vector(SIZE-1 downto 0);
+		signal12	: in std_logic_vector(SIZE-1 downto 0);
+		signal13	: in std_logic_vector(SIZE-1 downto 0);
+		signal14	: in std_logic_vector(SIZE-1 downto 0);
+		signal15	: in std_logic_vector(SIZE-1 downto 0);
+		signal16	: in std_logic_vector(SIZE-1 downto 0);
+		signal17	: in std_logic_vector(SIZE-1 downto 0);
+		signal18	: in std_logic_vector(SIZE-1 downto 0);
+		signal19	: in std_logic_vector(SIZE-1 downto 0);
+		signal20	: in std_logic_vector(SIZE-1 downto 0);
+		signal21	: in std_logic_vector(SIZE-1 downto 0);
+		signal22	: in std_logic_vector(SIZE-1 downto 0);
+		signal23	: in std_logic_vector(SIZE-1 downto 0);
+		signal24	: in std_logic_vector(SIZE-1 downto 0);
+		signal25	: in std_logic_vector(SIZE-1 downto 0);
+		signal26	: in std_logic_vector(SIZE-1 downto 0);
+		signal27	: in std_logic_vector(SIZE-1 downto 0);
+		signal28	: in std_logic_vector(SIZE-1 downto 0);
+		signal29	: in std_logic_vector(SIZE-1 downto 0);
+		signal30	: in std_logic_vector(SIZE-1 downto 0);
+		signal31	: in std_logic_vector(SIZE-1 downto 0);	
+		sel		: in std_logic_vector(4 downto 0);
 		output	: out std_logic_vector(SIZE-1 downto 0)
 	);
 end component;
@@ -41,17 +93,42 @@ component convbinario7seg is
         num7seg : out STD_LOGIC_VECTOR(0 to 6) );
 end component;
 
-signal mux1_out: std_logic_vector(31 downto 0);
-signal mux2_out: std_logic_vector(31 downto 0);
-signal current	: std_logic_vector(31 downto 0);
+signal current : std_logic_vector(31 downto 0);
 begin
-
-	current <= mux1_out when sig_select(2) = '0' else mux2_out;
-	
-	mux1:	MIPS_MUX_41 generic map(SIZE => 32)
-							port map(signalA => signalA, signalB => signalB, signalC => signalC, signalD => signalD, sel => sig_select(1 downto 0), output => mux1_out);
-	mux2:	MIPS_MUX_41 generic map(SIZE => 32)
-							port map(signalA => signalE, signalB => signalF, signalC => signalG, signalD => signalH, sel => sig_select(1 downto 0), output => mux2_out);
+	SEL:	MIPS_MUX_321 generic map(SIZE => 32)
+							port map(signal0 => signal0,
+										signal1 => signal1,
+										signal2 => signal2,
+										signal3 => signal3,
+										signal4 => signal4,
+										signal5 => signal5,
+										signal6 => signal6,
+										signal7 => signal7,
+										signal8 => signal8,
+										signal9 => signal9,
+										signal10 => signal10,
+										signal11 => signal11,
+										signal12 => signal12,
+										signal13 => signal13,
+										signal14 => signal14,
+										signal15 => signal15,
+										signal16 => signal16,
+										signal17 => signal17,
+										signal18 => signal18,
+										signal19 => signal19,
+										signal20 => signal20,
+										signal21 => signal21,
+										signal22 => signal22,
+										signal23 => signal23,
+										signal24 => signal24,
+										signal25 => signal25,
+										signal26 => signal26,
+										signal27 => signal27,
+										signal28 => signal28,
+										signal29 => signal29,
+										signal30 => signal30,
+										signal31 => signal31,
+										sel => sig_select, output => current);
 	display0: convbinario7seg port map(numbinario => current(3 downto 0), num7seg => hex0);
 	display1: convbinario7seg port map(numbinario => current(7 downto 4), num7seg => hex1);
 	display2: convbinario7seg port map(numbinario => current(11 downto 8), num7seg => hex2);
