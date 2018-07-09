@@ -111,7 +111,7 @@ set_location_assignment PIN_P25 -to new_pc[2]
 set_location_assignment PIN_N26 -to new_pc[1]
 set_location_assignment PIN_N25 -to new_pc[0]
 set_location_assignment PIN_G26 -to clock
-set_location_assignment PIN_W26 -to load_pc
+set_location_assignment PIN_B13 -to load_pc
 set_location_assignment PIN_AF10 -to hex0[0]
 set_location_assignment PIN_AB12 -to hex0[1]
 set_location_assignment PIN_AC12 -to hex0[2]

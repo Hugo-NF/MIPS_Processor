@@ -245,7 +245,6 @@ signal data_output		: std_logic_vector(WORD_SIZE-1 downto 0);
 
 -- Aux signals
 signal aux_branch			: std_logic;
-signal aux_load_pc		: std_logic;
 signal aux_new_pc			: std_logic_vector(WORD_SIZE-1 downto 0);
 signal aux_jump_cat		: std_logic_vector(WORD_SIZE-1 downto 0);
 signal aux_ext_imm		: std_logic_vector(WORD_SIZE-1 downto 0);
@@ -265,7 +264,6 @@ signal aux_alu_ovfl_d	: std_logic_vector(WORD_SIZE-1 downto 0);
 
 begin
 	aux_branch <= (((not(ctl_beq)) and ctl_bne and (not(alu_zero))) or (ctl_beq and (not(ctl_bne))and alu_zero));
-	aux_load_pc <= not(load_pc);
 	aux_new_pc <= "0000000000000000000000" & new_pc & "00";
 	aux_jump_cat <= pc_incremented(31 downto 28)& jump_imm;
 	aux_ext_imm <= std_logic_vector(shift_left(unsigned(sign_ext_imm), 2));
@@ -289,7 +287,7 @@ begin
 										alu_srcA => ctl_alu_srcA, alu_srcB => ctl_alu_srcB, mem_write => ctl_mem_write, reg_write => ctl_reg_wren);
 	
 	PC_LOAD: MIPS_MUX_21 generic map(SIZE => 2)
-								port map(signalA => ctl_pc_control, signalB => "01", sel => aux_load_pc, output => pc_src_select);
+								port map(signalA => ctl_pc_control, signalB => "01", sel => load_pc, output => pc_src_select);
 								
 	PC_SRC:	MIPS_MUX_41 generic map(SIZE => 32)
 								port map(signalA => pc_next, signalB => aux_new_pc, signalC => X"00004380", signalD => epc_current, 

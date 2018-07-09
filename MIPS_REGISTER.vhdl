@@ -17,7 +17,7 @@ begin
 	sync_proc: process(clock, current_value)
 	begin
 	current <= current_value;
-	if(rising_edge(clock)) then
+	if(rising_edge(clock) and wren = ENABLE) then
 		current_value <= load;
 	end if;
 	end process sync_proc;
