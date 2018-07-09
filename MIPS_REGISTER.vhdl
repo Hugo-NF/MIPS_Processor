@@ -5,6 +5,7 @@ use work.MIPS_CONSTANTS.all;
 entity MIPS_REGISTER is
 	port(
 		clock: in		std_logic;
+		wren:	 in		std_logic;
 		load:	in			std_logic_vector(WORD_SIZE-1 downto 0);
 		current: out	std_logic_vector(WORD_SIZE-1 downto 0) := X"00000000"
 	);

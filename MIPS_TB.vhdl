@@ -37,9 +37,6 @@ signal hex6:		 	std_logic_vector(0 to 6);
 signal hex7:		 	std_logic_vector(0 to 6);
 
 begin
-	DUT: MIPS port map(clock_fpga => clock_fpga, clock => clock, new_pc => new_pc, load_pc => load_pc, debug => debug, 
-							hex0 => hex0, hex1 => hex1, hex2 => hex2, hex3 => hex3, hex4 => hex4, hex5 => hex5, hex6 => hex6, hex7 => hex7);
-	
 	fast_clock: process
 	begin
 		clock_fpga <= '0';
@@ -56,9 +53,7 @@ begin
 		wait for 40 ns;
 	end process slow_clock;
 	
-	test: process
-	begin
-	wait;
-	end process test;
+	DUT: MIPS port map(clock_fpga => clock_fpga, clock => clock, new_pc => new_pc, load_pc => load_pc, debug => debug, 
+							hex0 => hex0, hex1 => hex1, hex2 => hex2, hex3 => hex3, hex4 => hex4, hex5 => hex5, hex6 => hex6, hex7 => hex7);
 
 end TB;

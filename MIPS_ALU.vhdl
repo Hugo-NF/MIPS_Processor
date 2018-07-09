@@ -66,7 +66,7 @@ begin
 		if(opcode = ULA_ADD) then
 			ovfl <= ((oprA(BIT_SIGN) and oprB(BIT_SIGN) and (not(next_output(BIT_SIGN)))) or (not(oprA(BIT_SIGN)) and (not(oprB(BIT_SIGN))) and next_output(BIT_SIGN)) );
 		elsif (opcode = ULA_SUB) then
-			ovfl <= ((oprA(BIT_SIGN) and (not(oprB(BIT_SIGN))) and (not(next_output(BIT_SIGN)))) or (not(oprA(BIT_SIGN)) and oprB(BIT_SIGN) and next_output(BIT_SIGN)) );
+			ovfl <= ((oprA(BIT_SIGN) and (not(oprB(BIT_SIGN))) and (not(next_output(BIT_SIGN)))) or ((not(oprA(BIT_SIGN))) and oprB(BIT_SIGN) and next_output(BIT_SIGN)) );
 		else
 			ovfl <= '0';
 		end if;

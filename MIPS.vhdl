@@ -116,6 +116,7 @@ end component;
 component MIPS_REGISTER is
 	port(
 		clock: in		std_logic;
+		wren:	 in		std_logic;
 		load:	in			std_logic_vector(31 downto 0);
 		current: out	std_logic_vector(31 downto 0)
 	);
@@ -139,7 +140,7 @@ component MIPS_CONTROL_UNIT is
 		mem_read_en: out	std_logic;
 		mem_read_sel: out	std_logic_vector(1 downto 0);
 		alu_opcode: out 	std_logic_vector(3 downto 0);
-		alu_srcA: out		std_logic;
+		alu_srcA: out		std_logic_vector(1 downto 0);
 		alu_srcB: out		std_logic_vector(1 downto 0);
 		mem_write: out		std_logic;
 		reg_write: out		std_logic
@@ -223,7 +224,7 @@ signal ctl_alu_opcode	: std_logic_vector(3 downto 0);
 signal ctl_pc_control	: std_logic_vector(1 downto 0);
 signal ctl_reg_dst		: std_logic_vector(1 downto 0);
 signal ctl_reg_wren		: std_logic;
-signal ctl_alu_srcA		: std_logic;
+signal ctl_alu_srcA		: std_logic_vector(1 downto 0);
 signal ctl_alu_srcB		: std_logic_vector(1 downto 0);
 signal ctl_mem_write		: std_logic;
 signal ctl_mem_read_en	: std_logic;
@@ -260,6 +261,7 @@ signal aux_imm16_d		: std_logic_vector(WORD_SIZE-1 downto 0);
 signal aux_imm26_d		: std_logic_vector(WORD_SIZE-1 downto 0);
 signal aux_dest_src_d	: std_logic_vector(WORD_SIZE-1 downto 0);
 signal aux_alu_opc_d		: std_logic_vector(WORD_SIZE-1 downto 0);
+signal aux_alu_ovfl_d	: std_logic_vector(WORD_SIZE-1 downto 0);
 
 begin
 	aux_branch <= (((not(ctl_beq)) and ctl_bne and (not(alu_zero))) or (ctl_beq and (not(ctl_bne))and alu_zero));
@@ -267,7 +269,7 @@ begin
 	aux_new_pc <= "0000000000000000000000" & new_pc & "00";
 	aux_jump_cat <= pc_incremented(31 downto 28)& jump_imm;
 	aux_ext_imm <= std_logic_vector(shift_left(unsigned(sign_ext_imm), 2));
-	aux_shamt <= X"000000"&"000"&instruction(15 downto 11);
+	aux_shamt <= X"000000"&"000"&instruction(10 downto 6);
 	aux_zero_imm <= X"0000"&instruction(15 downto 0);
 	
 	aux_opcode_d	<= X"000000"&"00"&instruction(31 downto 26);
@@ -279,6 +281,7 @@ begin
 	aux_imm26_d		<= "00000"&instruction(26 downto 0);
 	aux_dest_src_d	<= X"000000"&"000"&write_src;
 	aux_alu_opc_d	<= X"0000000"&ctl_alu_opcode;
+	aux_alu_ovfl_d <= X"0000000"&"000"&alu_overflow;
 
 	CONTROL:	MIPS_CONTROL_UNIT port map(opcode => instruction(31 downto 26), funct => instruction(5 downto 0), exc_ovfl => alu_overflow,
 										pc_ctrl => ctl_pc_control, reg_dst => ctl_reg_dst, jump => ctl_jump, jump_reg => ctl_jump_reg, beq => ctl_beq,
@@ -307,8 +310,8 @@ begin
 	JUMP_EN: MIPS_MUX_21		generic map(SIZE => 32)
 									port map(signalA => branch_src, signalB => jump_addr, sel => ctl_jump, output => pc_next);
 	
-	PC: 	MIPS_REGISTER port map(clock => clock, load => pc_input, current => pc_current);
-	EPC:	MIPS_REGISTER port map(clock => alu_overflow, load => pc_incremented, current => epc_current); 
+	PC: 	MIPS_REGISTER port map(clock => clock, wren => '1', load => pc_input, current => pc_current);
+	EPC:	MIPS_REGISTER port map(clock => clock, wren => alu_overflow, load => pc_incremented, current => epc_current); 
 	
 	INSTRUCTION_MEM: MIPS_INST_ROM port map(clock => clock_fpga, address => pc_current(9 downto 2), q => instruction); 
 	
@@ -321,8 +324,8 @@ begin
 	
 	SIGN_EXTEND: MIPS_SIGN_EXTEND port map(imm16 => instruction(15 downto 0), sig32 => sign_ext_imm);
 	
-	ALU_PORT_A: MIPS_MUX_21 generic map(SIZE => 32)
-									port map(signalA => reg_read1, signalB => aux_shamt, sel => ctl_alu_srcA, output => alu_src_A);
+	ALU_PORT_A: MIPS_MUX_41 generic map(SIZE => 32)
+									port map(signalA => reg_read1, signalB => aux_shamt, signalC => reg_read2, signalD => X"00000000", sel => ctl_alu_srcA, output => alu_src_A);
 				
 	ALU_PORT_B: MIPS_MUX_41 generic map(SIZE => 32)
 									port map(signalA => reg_read2, signalB => sign_ext_imm, signalC => aux_zero_imm, signalD => X"00000000",
@@ -360,7 +363,7 @@ begin
 										signal20 =>	alu_output, -- Saída da ULA
 										signal21 =>	data_output, -- Saída da memoria de dados
 										signal22 =>	write_data, -- Dado a ser escrito no breg
-										signal23 =>	X"00000000", -- vazio
+										signal23 =>	aux_alu_ovfl_d, -- Overflow da ULA
 										signal24 =>	X"00000000", -- vazio
 										signal25 =>	X"00000000", -- vazio
 										signal26 =>	X"00000000", -- vazio

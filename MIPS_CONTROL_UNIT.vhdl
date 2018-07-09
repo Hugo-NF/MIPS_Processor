@@ -19,7 +19,7 @@ entity MIPS_CONTROL_UNIT is
 		mem_read_en: out	std_logic;
 		mem_read_sel: out	std_logic_vector(1 downto 0);
 		alu_opcode: out 	std_logic_vector(3 downto 0);
-		alu_srcA: out		std_logic;
+		alu_srcA: out		std_logic_vector(1 downto 0);
 		alu_srcB: out		std_logic_vector(1 downto 0);
 		mem_write: out		std_logic;
 		reg_write: out		std_logic
@@ -40,7 +40,7 @@ begin
 		variable cur_mem_read_en: 		std_logic;
 		variable cur_mem_read_sel: 	std_logic_vector(1 downto 0);
 		variable cur_alu_opcode: 		std_logic_vector(3 downto 0);
-		variable cur_alu_srcA: 			std_logic;
+		variable cur_alu_srcA: 			std_logic_vector(1 downto 0);
 		variable cur_alu_srcB: 			std_logic_vector(1 downto 0);
 		variable cur_mem_write: 		std_logic;
 		variable cur_reg_write: 		std_logic;
@@ -97,15 +97,15 @@ begin
 						cur_alu_opcode := ULA_XOR;
 						
 					when FUNCT_SLL =>
-						cur_alu_srcA := SEL_ZERO_IMM_ALU_A;
+						cur_alu_srcA := SEL_SHAMT_ALU_A;
 						cur_alu_opcode := ULA_SLL;
 						
 					when FUNCT_SRL =>
-						cur_alu_srcA := SEL_ZERO_IMM_ALU_A;
+						cur_alu_srcA := SEL_SHAMT_ALU_A;
 						cur_alu_opcode := ULA_SRL;
 						
 					when FUNCT_SRA =>
-						cur_alu_srcA := SEL_ZERO_IMM_ALU_A;
+						cur_alu_srcA := SEL_SHAMT_ALU_A;
 						cur_alu_opcode := ULA_SRA;
 						
 					when FUNCT_SUB =>
@@ -184,6 +184,7 @@ begin
 			when OPCODE_LUI =>
 				cur_alu_opcode := ULA_LUI;
 				cur_alu_srcB := SEL_ZERO_IMM_ALU_B;
+				cur_alu_srcA := SEL_BREG2_ALU_A;
 				cur_reg_write := ENABLE;
 				
 			when OPCODE_ERET =>

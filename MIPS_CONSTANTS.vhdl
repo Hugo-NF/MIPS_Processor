@@ -72,8 +72,9 @@ package MIPS_CONSTANTS is
 	constant SEL_SIG_IMM_ALU_B		: std_logic_vector(1 downto 0) := "01";
 	constant SEL_ZERO_IMM_ALU_B	: std_logic_vector(1 downto 0) := "10";
 	
-	constant SEL_BREG_ALU_A			: std_logic := '0';
-	constant SEL_ZERO_IMM_ALU_A	: std_logic := '1';
+	constant SEL_BREG_ALU_A			: std_logic_vector(1 downto 0) := "00";
+	constant SEL_SHAMT_ALU_A		: std_logic_vector(1 downto 0) := "01";
+	constant SEL_BREG2_ALU_A		: std_logic_vector(1 downto 0) := "10";
 	
 	constant SEL_PC_FETCH	: std_logic_vector(1 downto 0) := "00";
 	constant SEL_PC_LOAD		: std_logic_vector(1 downto 0) := "01";
